@@ -1,5 +1,5 @@
-@extends('layouts.common')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <style>
     .btn-danger{
         width:35px !important;
@@ -30,23 +30,23 @@
                 <div class="card-body">
                     <div class="tab-content pt-5" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab" tabindex="0">
-                            @include('admin.products.product_content', ['product' => $product, 'categories' => $categories, 'subcategories'  => $subcategories])
+                            <?php echo $__env->make('admin.products.product_content', ['product' => $product, 'categories' => $categories, 'subcategories'  => $subcategories], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
 
-                        <div class="tab-pane fade" id="product-images" role="tabpanel" aria-labelledby="product-images-tab" tabindex="0">@include('admin.products.product_image_content', ['product_images' => $product['product_images']])
+                        <div class="tab-pane fade" id="product-images" role="tabpanel" aria-labelledby="product-images-tab" tabindex="0"><?php echo $__env->make('admin.products.product_image_content', ['product_images' => $product['product_images']], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
 
                       <div class="tab-pane fade" id="single-val" role="tabpanel" aria-labelledby="single-val-tab" tabindex="0">
-                        @include('admin.products.single_value_content',['value_attribute' => $product['value_attribute']])
+                        <?php echo $__env->make('admin.products.single_value_content',['value_attribute' => $product['value_attribute']], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         
                       </div>
 
                       <div class="tab-pane fade" id="product_details" role="tabpanel" aria-labelledby="product_details-tab" tabindex="0">
-                          @include('admin.products.product_details_content', ['product_details' => $product['product_details']]) 
+                          <?php echo $__env->make('admin.products.product_details_content', ['product_details' => $product['product_details']], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> 
                       </div>
 
                       <div class="tab-pane fade" id="variation-val" role="tabpanel" aria-labelledby="variation-val-tab" tabindex="0">
-                        @include('admin.products.product_variation', ['variation' => $product['variation']]);
+                        <?php echo $__env->make('admin.products.product_variation', ['variation' => $product['variation']], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;
                       </div>
             </div>
                 </div>
@@ -89,9 +89,9 @@
                                     <label>Attribute<span class="text-danger">*</span></label>
                                     <select name="value_attribute[0][attr]" class="form-control select_attr" >
                                         <option value="">Select Attribute</option>
-                                        @foreach($attributes as $attr)
-                                        <option value="{{$attr['_id']}}">{{$attr['name']}}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $attributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($attr['_id']); ?>"><?php echo e($attr['name']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <span class="text-danger err"></span>
                                 </div>
@@ -112,9 +112,9 @@
                                 </div>
                         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
     $.ajaxSetup({
         headers: {
@@ -281,7 +281,7 @@
         if(validate){
             var fd = new FormData($('#edit_product_form')[0]);
             $.ajax({
-                url:"{{route('update-product')}}",
+                url:"<?php echo e(route('update-product')); ?>",
                 type:"post",
                 dataType:'json',
                 processData:false,
@@ -381,7 +381,7 @@
 
     function fetchSubCategory(val){
          $.ajax({
-            url:"{{route('fetch-sub-ctg')}}",
+            url:"<?php echo e(route('fetch-sub-ctg')); ?>",
             type:"get",
             data: {eid : val},
             success:function(data){
@@ -395,7 +395,7 @@
     $('#sub_category_id').change(function(k,v){
         var val = $(this).val();
         $.ajax({
-            url:"{{route('fetch-attr')}}",
+            url:"<?php echo e(route('fetch-attr')); ?>",
             type:"get",
             data: {sid : val},
             success:function(data){
@@ -406,7 +406,7 @@
         });
     });
 
-var c = "{{ count($product['variation']) }}";
+var c = "<?php echo e(count($product['variation'])); ?>";
 $('#add-card').click(function(){
   c++;
   var data = $('.card-field:first').clone(true);
@@ -667,5 +667,7 @@ $("#flexSwitchCheckChecked").click(function(){
   $("#variations").html(vrtn);
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layouts.common', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Laravel_Mongodb\resources\views/admin/products/edit_product.blade.php ENDPATH**/ ?>

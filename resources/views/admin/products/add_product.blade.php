@@ -373,7 +373,7 @@
             return false;
         }
 
-        if(variations_err > 0){
+        if(variations_err > 0 && $('#variations').is(':visible')){
             $('#prod_vartn').text('Atleast one variation is required.');
             prod_vartn
             $('#variation-tab').trigger('click');
@@ -658,5 +658,18 @@ function countDiscount(id){
     $('#discount-'+ide).val(discount);
   }
 }
+
+$("#flexSwitchCheckDefault").click(function(){
+  $("#variations").toggle();
+  var vrtn = $('#display_on_switch').html();
+  $("#variations").html(vrtn);
+});
+
+
+$("#flexSwitchCheckChecked").click(function(){
+  $("#variations").toggle();
+  var vrtn = $('#display_on_switch').html();
+  $("#variations").html(vrtn);
+});
 </script>
 @endsection

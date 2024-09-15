@@ -4,6 +4,6 @@
 				</button>
 
 				 <div class="collapse navbar-collapse d-lg-flex justify-content-end clearfix" id="navbarNav">
-		    <a href="{{route('logout')}}"><button class="btn btn-outline-light">Logout</button></a>
+		    <a href="<?php echo e(route('logout')); ?>"><button class="btn btn-outline-light">Logout</button></a>
 	    </div>
-			</nav>
+			</nav><?php /**PATH D:\Laravel_Mongodb\resources\views/layouts/admin_navbar.blade.php ENDPATH**/ ?>

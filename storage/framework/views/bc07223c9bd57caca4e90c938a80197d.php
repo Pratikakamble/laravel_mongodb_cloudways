@@ -1,5 +1,5 @@
-@extends('layouts.common')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <style>
     .btn-danger{
         width:35px !important;
@@ -9,7 +9,7 @@
     }
 </style>
     <div class="container">
-        <form method="post" id="edit_product_form" name="edit_product_form" enctype="multipart/form-data">
+        <form method="post" id="add_product_form" name="add_product_form" enctype="multipart/form-data">
             <div class="card">
                 <div class="card-header">
                      <nav>
@@ -29,26 +29,25 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content pt-5" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab" tabindex="0">
-                            @include('admin.products.product_content', ['product' => $product, 'categories' => $categories, 'subcategories'  => $subcategories])
-                        </div>
+                      <div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab" tabindex="0">
+                            <?php echo $__env->make('admin.products.product_content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                      </div>
 
-                        <div class="tab-pane fade" id="product-images" role="tabpanel" aria-labelledby="product-images-tab" tabindex="0">@include('admin.products.product_image_content', ['product_images' => $product['product_images']])
-                        </div>
+                      <div class="tab-pane fade" id="product-images" role="tabpanel" aria-labelledby="product-images-tab" tabindex="0">                                                                   <?php echo $__env->make('admin.products.product_image_content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                      </div>
 
                       <div class="tab-pane fade" id="single-val" role="tabpanel" aria-labelledby="single-val-tab" tabindex="0">
-                        @include('admin.products.single_value_content',['value_attribute' => $product['value_attribute']])
-                        
+                        <?php echo $__env->make('admin.products.single_value_content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                       </div>
 
                       <div class="tab-pane fade" id="product_details" role="tabpanel" aria-labelledby="product_details-tab" tabindex="0">
-                          @include('admin.products.product_details_content', ['product_details' => $product['product_details']]) 
-                      </div>
+                        <?php echo $__env->make('admin.products.product_details_content', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> 
+                      </div> 
 
                       <div class="tab-pane fade" id="variation-val" role="tabpanel" aria-labelledby="variation-val-tab" tabindex="0">
-                        @include('admin.products.product_variation', ['variation' => $product['variation']]);
+                        <?php echo $__env->make('admin.products.product_variation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                       </div>
-            </div>
+                </div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-success" name="product_save" id="product_save">Save</button>
@@ -58,27 +57,27 @@
 
 
 
-    <div style="display:none;" id="clone_input">
+     <div style="display:none;" id="clone_input">
          <div class="row" id="row-1">
-                                <div class="col-sm-1 text-center" style="align-content: end;">
+                                <div class="col-sm-1 text-center" style="align-content: center;">
                                       <span class="dtl_attr_cnt">1.</span>
-                                       <input type="hidden" class="hidden_details" name="product_details[0][details_id]" value="">
                                 </div>
                                 <div class="col-sm-5">
-                                    <label>Attribute</label>
-                                      <input type="text" name="product_details[0][attr]"  class="form-control select_attribute" >
+                                    <label>Attribute<span class="text-danger">*</span></label>
+                                    <input type="text" name="product_details[0][attr]"  class="form-control select_attribute" >
+                                    <span class="text-danger err"></span>
                                 </div>
                                 <div class="col-sm-5">
-                                    <label>Value</label>
+                                    <label>Value<span class="text-danger">*</span></label>
                                     <input type="text" name="product_details[0][val]" class="form-control input_value">
+                                    <span class="text-danger err"></span>
                                 </div>
-                                <div class="col-sm-1" style="align-content: end;">
+                                <div class="col-sm-1" style="align-content: center;">
                                     <button type="button" class="btn btn-danger" id="add_attr" onclick="rmvDetailAttr(this)">-</button>
                                 </div>
                             </div>    
     </div>
 
-   
     <div style="display:none;" id="clone_single_val">
          <div class="row">
                                 <div class="col-sm-1 text-center" style="align-content: center;">
@@ -89,9 +88,9 @@
                                     <label>Attribute<span class="text-danger">*</span></label>
                                     <select name="value_attribute[0][attr]" class="form-control select_attr" >
                                         <option value="">Select Attribute</option>
-                                        @foreach($attributes as $attr)
-                                        <option value="{{$attr['_id']}}">{{$attr['name']}}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $attributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($attr['_id']); ?>"><?php echo e($attr['name']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <span class="text-danger err"></span>
                                 </div>
@@ -112,9 +111,11 @@
                                 </div>
                         </div>
     </div>
-@endsection
 
-@section('script')
+ 
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('script'); ?>
 <script>
     $.ajaxSetup({
         headers: {
@@ -140,9 +141,6 @@
         });
 
         $('.append_single_val .row').each(function(key, val){
-            $('.append_single_val .hidden_attribute').each(function(k,v){
-                $(this).attr('name', "value_attribute["+k+"][attribute_id]");
-            });
             $('.append_single_val .select_attr').each(function(k,v){
                 $(this).attr('name', "value_attribute["+k+"][attr]");
 
@@ -150,9 +148,12 @@
             $('.append_single_val .input_val').each(function(k,v){
                 $(this).attr('name', "value_attribute["+k+"][val]");
             });
+            
+
             $('.append_single_val .pro_atr_img').each(function(k,v){
                  $(this).attr('id', 'pro_atr_img-'+k);
             });
+
             $('.append_single_val .input_image').each(function(k,v){
                 $(this).attr('name', "value_attribute["+k+"][image]");
                 $(this).attr('id', 'input_image-'+k);
@@ -233,9 +234,6 @@
 
         $('.append_input .row').each(function(key, val){
             var row_id = $(this).attr('id');
-            $('.append_input .hidden_details').each(function(k,v){
-                $(this).attr('name', "product_details["+k+"][details_id]");
-            });
             $('.append_input .select_attribute').each(function(k,v){
                 $(this).attr('name', "product_details["+k+"][attr]");
             });
@@ -274,14 +272,13 @@
         }
     }
 
-
     $('#product_save').click(function(e){
         e.preventDefault();
         var validate = checkValidations();
         if(validate){
-            var fd = new FormData($('#edit_product_form')[0]);
+            var fd = new FormData($('#add_product_form')[0]);
             $.ajax({
-                url:"{{route('update-product')}}",
+                url:"<?php echo e(route('save-product')); ?>",
                 type:"post",
                 dataType:'json',
                 processData:false,
@@ -289,7 +286,7 @@
                 data:fd,
                 success:function(data){
                     if(data.success){
-                        alert('Product Updated Successfully');
+                        alert('Product Saved Successfully');
                     }else{
                         alert(data.message);
                     }
@@ -304,7 +301,7 @@
         $('#product select, #product input').each(function(k,v){
             if($(this).val() == ''){ 
                 var name = $(this).attr('name');
-                if(name != 'discount' && name != 'image'){
+                if(name != 'discount'){
                     names.push(name);
                 }else{
                     $(this).next('span').text('');
@@ -314,6 +311,14 @@
 
         for(i in names){
             $('.'+names[i]).text('This field is required'); 
+        }
+
+        var images_err = false;
+        if($('#image-1').val() == ''){
+            $('.product_images').text('This field is required');
+            var images_err = true; 
+        }else{
+            $('.product_images').text('');
         }
 
         var attr_err = 0;
@@ -328,7 +333,7 @@
 
         var details_err = 0;
         $('#product_details input').each(function(k,v){
-            if($(this).val() == '' && $(this).attr('type') != 'hidden'){
+            if($(this).val() == ''){
                 $(this).next('span').text('This field is required.');
                 details_err = parseInt(details_err) + 1;
             }else{
@@ -336,12 +341,9 @@
             }
         });
 
-
         var variations_err = 0;
         $('#variations .input').each(function(k,v){
-            if($(this).data('name') == 'attr_image' || $(this).data('name') == 'pro_image'){
-                $(this).next('span').text('');
-            }else{
+            if($(this).data('name') != 'attr_image'){
                 if($(this).val() == ''){
                     $(this).next('span').text('This field is required.');
                      variations_err = parseInt(variations_err) + 1;
@@ -356,6 +358,10 @@
             return false;
         }
 
+        if(images_err){
+            $('#product-images-tab').trigger('click');
+            return false;
+        }
         
         if(attr_err > 0){
             $('#single-val-tab').trigger('click');
@@ -375,13 +381,13 @@
         }else{
              $('#prod_vartn').text('');
         }
-
+        
         return true;
     }
 
     function fetchSubCategory(val){
          $.ajax({
-            url:"{{route('fetch-sub-ctg')}}",
+            url:"<?php echo e(route('fetch-sub-ctg')); ?>",
             type:"get",
             data: {eid : val},
             success:function(data){
@@ -395,18 +401,19 @@
     $('#sub_category_id').change(function(k,v){
         var val = $(this).val();
         $.ajax({
-            url:"{{route('fetch-attr')}}",
+            url:"<?php echo e(route('fetch-attr')); ?>",
             type:"get",
             data: {sid : val},
             success:function(data){
                 if(data.success){
                     $('.select_attr').html(data.html_content);
+                    $('.attributes').html(data.html_content);
                 }
             },
         });
     });
 
-var c = "{{ count($product['variation']) }}";
+var c = 1;
 $('#add-card').click(function(){
   c++;
   var data = $('.card-field:first').clone(true);
@@ -591,10 +598,8 @@ function cardorder(){
       $(this).attr('id','card_field-'+co);
       
         $('#card_field-'+co+' input').each(function(){
-          if($(this).attr('type') != 'hidden'){
-                var field = $(this).attr('id').split('-');
-                $(this).attr('id', field[0]+'-'+co);
-            }
+          var field = $(this).attr('id').split('-');
+          $(this).attr('id', field[0]+'-'+co);
         })
 
         $('#card_field-'+co+' .frm_err').each(function (key, val){
@@ -667,5 +672,5 @@ $("#flexSwitchCheckChecked").click(function(){
   $("#variations").html(vrtn);
 });
 </script>
-@endsection
-
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.common', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Laravel_Mongodb\resources\views/admin/products/add_product.blade.php ENDPATH**/ ?>

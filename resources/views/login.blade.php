@@ -14,11 +14,11 @@
 </head>
 
 
-<body>
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto mt-5" style="border:1px solid black; padding:10px;">
+<body class="bg-light">
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto mt-5 bg-white" style="border:1px solid black; padding:10px;">
 	<h3 class="text-center">Login Form</h3>
 	@if(Session::has('error'))
-	<p class="text-danger"><b>{{Session::get('error')}}</b></p>
+	<p class="text-danger" style="margin-left: 20px;"><b>{{Session::get('error')}}</b></p>
 	@endif
 
 	<form action="<?= route('signin') ?>" method="post">
@@ -38,7 +38,7 @@
 	    @enderror
 	  </div>
 	  <div class="text-center">
-	  	<button type="submit" class="btn btn-primary">Submit</button>
+	  	<button type="submit" class="btn btn-primary">Login</button>
 	   <p><a href="{{route('register')}}" >Create a Account</a></p>
 	</div>
 	

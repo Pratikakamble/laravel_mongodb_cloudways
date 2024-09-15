@@ -29,4 +29,8 @@ class Product extends Model
     public function Variation(){
         return $this->hasMany(Variation::class);
     }
+
+    public function Cart(){
+        return $this->hasMany(Cart::class);
+    }
 }

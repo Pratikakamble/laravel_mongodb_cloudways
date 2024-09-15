@@ -8,8 +8,16 @@
 <body> -->
 
 
-    
+
 <?php $__env->startSection('content'); ?>
+<style>
+    .hide{
+        display: none;
+    }
+    .btn-block{
+        margin-top:20px;
+    }
+</style>
     
 <div class="container">
     

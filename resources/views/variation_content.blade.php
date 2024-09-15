@@ -1,35 +1,35 @@
 
-
-
-
 <input type="hidden" id="variation_id" value="">
-
 <div class="row mt-2">
 				<div class="col-md-1 text-center product_images">
-					@foreach($product['product_images'] as $key => $img)
-						<img src="{{asset($img['image'])}}" class="img-responsive p-3" width="100%" height="90px" style="cursor: pointer;">
+
+					@php
+						$images = array_column($product['variation_attribute'],'image');
+					@endphp
+
+					@foreach($images as $key => $img)
+						<img src="{{asset($img)}}" class="img-responsive p-3" width="100%" height="90px" style="cursor: pointer;">
 					@endforeach
 				</div>
 
 				<div class="col-md-4 bg-light ">
-					<img src = "{{ asset($product['image']) }}" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
+					<img src = "{{ asset($images[0]) }}" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
 				</div>
-
-				<input type="hidden" id="selling_amount" value="{{$product['selling_amount'] ?? ''}}"> 
+				<input type="hidden" id="selling_amount" value="{{$product['selling_price'] ?? ''}}"> 
 
 				<div class="col-md-4 px-4">
 					<div class="product_details product_images">
-						<p><h5><strong>{{ $product['brand_or_store'] }}</strong></h5><p>
-						<p><b>Product Name </b>: {{$product['product_name'] ?? ''}} <p>
-						<p><b>Price </b>: {{$product['selling_amount'] ?? ''}} Rs,
-							<small>M.R.P.:<strike>{{$product['mrp_amount']}}</strike></small>
+						<p><h5><strong>Brand</strong></h5><p>
+						<p><b>Product Name </b>: {{$product['variation_name'] ?? ''}} <p>
+						<p><b>Price </b>: {{$product['selling_price'] ?? ''}} Rs,
+							<small>M.R.P.:<strike>{{$product['mrp']}}</strike></small>
 						</p>
 						<p>
-							<b>Discount</b>:{{$product['discount_amount'] ?? ''}} Rs
+							<b>Discount</b>:{{$product['discount'] ?? ''}} Rs
 						<p>
 
 						@php
-						    $data = collect($product['value_attribute'])->groupBy('attribute_id')->toArray();
+						    $data = collect($product['variation_attribute'])->groupBy('attr_id')->toArray();
 						@endphp
 <!-- Tab panes -->
 <div class="tab-content">
@@ -37,9 +37,10 @@
 		@if(count($val) > 1)
 			@foreach($val as $k => $atr)
 			    <div id="{{'identy'}}{{$k+1}}" class="container tab-pane @if($k == 0) active @endif" style="padding:0px;">
-			    	<p><b>{{$atr['attribute']['name']}}</b>: <span>{{$atr['value']}}</span></p>
-			    	<input type="text" class="form-control atr_val" value="{{$atr['attribute_id'].':'.$atr['value']}}"> 
-			    	
+			    	<p><b>{{$atr['attr_id']}}</b>: <span>{{$atr['attr_val']}}</span></p>
+
+
+			    	<input type="text" class="form-control atr_val" value="{{$atr['attr_id'].':'.$atr['attr_val']}}"> 
 			    </div>
 			@endforeach
 		@endif
@@ -69,15 +70,15 @@
 
 
 
-						@if(!empty($product['product_details']))
+						@if(!empty($product['variation_detail']))
 							<div class="row pro_dtl">
 								<h6 class="mb-2 mt-5"><strong>Product Details</strong></h6>
 								<div class="table-responsive">
 									<table class="table ">
-									@foreach($product['product_details'] as $key => $dtl)
+									@foreach($product['variation_detail'] as $key => $dtl)
 										<tr>
-											<td><b>{{$dtl['attribute']}}</b></td>
-											<td>{{$dtl['value']}}</td>
+											<td><b>{{$dtl['attr_name']}}</b></td>
+											<td>{{$dtl['attr_val']}}</td>
 										</tr>
 									@endforeach
 								    </table>
@@ -86,7 +87,7 @@
 						@endif
 
 						<button class="btn btn-primary mt-2" onclick="addToCart()">Add To Cart</button>
-						<a href="{{url('stripe/'.$product['selling_amount'])}}"><button class="btn btn-success mt-2">Buy Now</button></a>
+						<a href="{{url('stripe/'.$product['selling_price'])}}"><button class="btn btn-success mt-2">Buy Now</button></a>
 					</div>
 				</div>
 				
@@ -95,7 +96,7 @@
 					<p>Delivery Charges</p>
 				</div>
 
-				<div class="col-md-1">
+				<div class="col-md-1" >
 					<div class="shadow p-3 mb-5 bg-white rounded" style="height:100vh;">
 						<p><b>Cart</b></p>
 						<div id="cart_content" ></div>
@@ -107,4 +108,3 @@
 
 
 
-			

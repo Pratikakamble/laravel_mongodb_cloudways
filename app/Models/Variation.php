@@ -20,5 +20,8 @@ class Variation extends Model
     	return $this->hasMany(Variation_Detail::class);
     }
 
+    public function Cart(){
+        return $this->hasMany(Cart::class);
+    }
     
 }

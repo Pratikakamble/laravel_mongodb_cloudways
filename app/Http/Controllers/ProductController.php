@@ -14,6 +14,7 @@ use App\Models\SubCategory;
 use App\Models\Variation;
 use App\Models\Variation_Attribute;
 use App\Models\Variation_Detail;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Storage;
 use View;
 use Session;
@@ -165,33 +166,47 @@ class ProductController extends Controller
     }
 
 
-    public function view_product($id){
+    public function view_product($type, $id){
     	$categories = Category::all();
-    	$product = Product::with(['ProductDetails','ProductImages','ValueAttribute','ValueAttribute.Attribute:_id,name','Variation','Variation.VariationAttribute', 'Variation.VariationDetail'])->where('_id',$id)->first();
+        if($type == 'product'){
+            $product = Product::with(['ProductDetails','ProductImages','ValueAttribute','ValueAttribute.Attribute:_id,name','Variation','Variation.VariationAttribute', 'Variation.VariationDetail'])->where('_id',$id)->first();
+        }else if($type == 'variation'){
+            $product = Variation::with(['VariationAttribute', 'VariationDetail'])->where(['_id' => $id])->first();
+        }
 
-        /*$data = collect($product['value_attribute'])->groupBy('attribute_id')->toArray();
-
-        foreach($data as $val){
-            if(count($val) >1){
-
+       if(!empty($product)){
+            $product = $product->toArray();
+            $selling_amount = ($type == 'product') ? $product['selling_amount'] : $product['selling_price'];
+            Session::put('selling_amount',  $selling_amount);
+            if(request()->ajax()){
+                if($type == 'product'){
+                    $content = View::make('product_content', ['product' => $product])->render();
+                }else if($type == 'variation'){
+                   $content = View::make('variation_content', ['product' => $product])->render();
+                }
+                return ['success'=>true, 'content' => $content];
             }
+            return view('view_product', ['product' => $product, 'id' => $id, 'categories' => $categories]);
+            }else{
+                return 'Product Not Found';
+            }
+    }
+
+
+    public function view_variation($vid){
+        $categories = Category::all();
+        $product = Variation::with(['VariationAttribute', 'VariationDetail'])->where(['_id' => $vid])->first();
+        $variations = Product::with(['Variation'])->where(['_id' => $product->product_id])->get();
+        if(!empty($product)){
+            $product = $product->toArray();
+            Session::put('selling_amount', $product['selling_price']);
+            if(request()->ajax()){
+                $content = View::make('variation_content', ['product' => $product, 'variations' => $variations])->render();
+                return ['success'=>true, 'content' => $content];
+            }
+        }else{
+            return 'Product Not Found';
         }
-
-        echo "<pre>"; print_r($data); 
-        die;*/
-
-    	if(!empty($product)){
-    		$product = $product->toArray();
-
-            Session::put('selling_amount', $product['selling_amount']);
-    	if(request()->ajax()){
-    		$content = View::make('product_content', ['product' => $product])->render();
-        	return ['success'=>true, 'content' => $content];
-        }
-        return view('view_product', ['product' => $product, 'id' => $id, 'categories' => $categories]);
-    	}else{
-    		return 'Product Not Found';
-    	}
     }
 
     public function update_product(Request $request){
@@ -462,5 +477,7 @@ class ProductController extends Controller
     		return ['success' => false, 'message' => $e->getMessage().', '.$e->getLine()];
     	}
     }
+
+    
 
 }

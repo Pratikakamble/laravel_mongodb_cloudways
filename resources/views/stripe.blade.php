@@ -8,8 +8,16 @@
 <body> -->
 
 
-    @extends('layouts.front_online_store', ['categories' => $categories])
+@extends('layouts.front_online_store', ['categories' => $categories])
 @section('content')
+<style>
+    .hide{
+        display: none;
+    }
+    .btn-block{
+        margin-top:20px;
+    }
+</style>
     
 <div class="container">
     
