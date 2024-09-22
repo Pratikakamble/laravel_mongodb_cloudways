@@ -11,7 +11,7 @@
       <ul class="navbar-nav ">
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $ctg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
           <li class="nav-item">
-            <a class="nav-link text-white" href="#"><?php echo e($ctg->name); ?></a>
+            <a class="nav-link text-white" href="/online-store/<?php echo e($ctg->_id); ?>"><?php echo e($ctg->name); ?></a>
           </li>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </ul>

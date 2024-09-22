@@ -14,7 +14,8 @@ class StripePaymentController extends Controller
     public function stripe($amount)
     {
         $categories = Category::all();
-        return view('stripe', ['amount' => $amount, 'categories' => $categories]);
+         $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
+        return view('stripe', ['amount' => $amount, 'categories' => $categories, 'cart_count' => $cart_count]);
     }
     
     /**

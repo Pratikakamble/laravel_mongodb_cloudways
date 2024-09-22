@@ -51,7 +51,7 @@ class ProductController extends Controller
     }
 
     public function save_product(Request $request){
-        //echo "<pre>"; print_r($request->all()); die;
+    //echo "<pre>"; print_r($request->all()); die;
     	try{
             DB::beginTransaction();
     		$product = new Product();
@@ -113,6 +113,7 @@ class ProductController extends Controller
 
             if(!empty($request->variation)){
                 foreach($request->variation as $key => $vrtn){
+                    if($vrtn['name'] != ''){
                         $Variation = new Variation();
                         $Variation->product_id = $product->_id;
                         $Variation->variation_name = $vrtn['name'];
@@ -155,6 +156,8 @@ class ProductController extends Controller
                                 }
                             }
                         }
+                    }
+                    
                 }
             }
             DB::commit();
@@ -179,14 +182,16 @@ class ProductController extends Controller
             $selling_amount = ($type == 'product') ? $product['selling_amount'] : $product['selling_price'];
             Session::put('selling_amount',  $selling_amount);
             if(request()->ajax()){
+                 $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
                 if($type == 'product'){
-                    $content = View::make('product_content', ['product' => $product])->render();
+                    $content = View::make('product_content', ['product' => $product, 'cart_count' => $cart_count])->render();
                 }else if($type == 'variation'){
-                   $content = View::make('variation_content', ['product' => $product])->render();
+                   $content = View::make('variation_content', ['product' => $product, 'cart_count' => $cart_count])->render();
                 }
                 return ['success'=>true, 'content' => $content];
             }
-            return view('view_product', ['product' => $product, 'id' => $id, 'categories' => $categories]);
+            $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
+            return view('view_product', ['product' => $product, 'id' => $id, 'categories' => $categories, 'cart_count' => $cart_count]);
             }else{
                 return 'Product Not Found';
             }

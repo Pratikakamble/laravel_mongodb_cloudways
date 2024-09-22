@@ -62,13 +62,17 @@ Route::middleware(['check_auth'])->group(function(){
 	
 });
 
+
+
+Route::middleware(['user_auth'])->group(function(){
+
 Route::get('/view-product/{product}/{id}', [ProductController::class, 'view_product']);
 Route::get('/product-content/{type}/{id}', [ProductController::class, 'view_product']);
 
 Route::get('/variation-content/{id}', [ProductController::class, 'view_variation']);
-Route::get('/online-store', [OnlineStoreController::class, 'online_store'])->name('online-store');
+Route::get('/online-store/{ctg?}', [OnlineStoreController::class, 'online_store'])->name('online-store');
 Route::post('/add-to-cart',[OnlineStoreController::class, 'add_to_cart']);
-Route::middleware(['user_auth'])->group(function(){
+Route::get('/cart-view', [OnlineStoreController::class, 'cart_view'])->name('cart-view');
 	
 });
 
@@ -78,10 +82,17 @@ Route::get('/register', [OnlineStoreController::class, 'register_view']);
 Route::post('/register', [OnlineStoreController::class, 'register'])->name('register');
 Route::get('/logout', [OnlineStoreController::class, 'logout'])->name('logout');
 
+Route::get('/view-cart-content', [OnlineStoreController::class, 'view_cart_content'])->name('view-cart-content');
+
+
+Route::post('/update-qnt', [OnlineStoreController::class, 'update_qnt']);
+
 
 Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe/{amount}', 'stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
     Route::get('stripe-screen', 'stripe_screen')->name('stripe-screen');
 });
+
+Route::post('/dlt-cart', [OnlineStoreController::class, 'dlt_cart']);
 

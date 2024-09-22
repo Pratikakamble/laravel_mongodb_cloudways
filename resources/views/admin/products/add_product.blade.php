@@ -379,7 +379,13 @@
             $('#variation-tab').trigger('click');
             return false;
         }else{
-             $('#prod_vartn').text('');
+            var add_vrtn = confirm('Do you want to add a variation?');
+            if(add_vrtn){
+                $('#variation-tab').trigger('click');
+                return false;
+            }else{
+                $('#prod_vartn').text('');
+            }
         }
         
         return true;

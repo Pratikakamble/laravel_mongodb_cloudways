@@ -11,7 +11,7 @@
       <ul class="navbar-nav ">
         @foreach($categories as $key => $ctg) 
           <li class="nav-item">
-            <a class="nav-link text-white" href="#">{{$ctg->name}}</a>
+            <a class="nav-link text-white" href="/online-store/{{$ctg->_id}}">{{$ctg->name}}</a>
           </li>
         @endforeach
       </ul>

@@ -18,6 +18,10 @@
 			font-size:12px;
 			padding:4px;
 		}
+		.card-body p{
+			padding:0px;
+			margin:0px;
+		}
 	</style>
 </head>
 <body>
@@ -36,7 +40,7 @@
 	        </form>
 	    </div>
 
-	    <div class="text-white"><i class="fa-solid fa-cart-shopping fa-2xl"></i>(<span id="cart_count"> 0 </span>)</div>
+	    <div class="text-white"><a href="<?php echo e(route('view-cart-content')); ?>" style="color:white; text-decoration:none;"><i class="fa-solid fa-cart-shopping fa-2xl"></i>(<span id="cart_count"> <?php echo e($cart_count); ?> </span>)</a></div>
 	  </div>
 	</nav>
 
