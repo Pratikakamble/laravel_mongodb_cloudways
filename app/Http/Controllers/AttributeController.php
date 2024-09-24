@@ -43,8 +43,9 @@ class AttributeController extends Controller
 
 
     public function edt_attribute(Request $request){
-        $ctg = Attribute::where(['_id' => $request->eid])->value('name');
-        return ['success' => true, 'ctg' => $ctg];
+        $attr = Attribute::where(['_id' => $request->eid])->first()->toArray();
+
+        return ['success' => true, 'ctg' => $attr['category_id'], 'sub_ctg' => $attr['sub_category_id'], 'name' => $attr['name'], 'id' => $attr['_id']];
     }
 
     public function upd_attribute(Request $request){

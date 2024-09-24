@@ -113,7 +113,7 @@ class ProductController extends Controller
 
             if(!empty($request->variation)){
                 foreach($request->variation as $key => $vrtn){
-                    if($vrtn['name'] != ''){
+                    if(isset($vrtn['name']) && $vrtn['name'] != ''){
                         $Variation = new Variation();
                         $Variation->product_id = $product->_id;
                         $Variation->variation_name = $vrtn['name'];

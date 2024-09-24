@@ -55,7 +55,7 @@ Route::middleware(['check_auth'])->group(function(){
 	Route::post('attribute-exists/{ctg_id}/{sub_ctg_id}',[AttributeController::class, 'attribute_exists']);
 	Route::post('save-attribute', [AttributeController::class, 'save_attribute'])->name('save-attribute');
 	Route::get('edt-attribute', [AttributeController::class, 'edt_attribute'])->name('edt-attribute');
-	Route::get('upd-attribute', [AttributeController::class, 'upd_attribute'])->name('upd-attribute');
+	Route::post('upd-attribute', [AttributeController::class, 'upd_attribute'])->name('upd-attribute');
 	Route::post('dlt-attribute', [AttributeController::class, 'dlt_attribute'])->name('dlt-attribute');
 	Route::get('fetch-sub-ctg', [AttributeController::class, 'fetch_sub_ctg'])->name('fetch-sub-ctg');
 	Route::get('fetch-attr', [AttributeController::class, 'fetch_attr'])->name('fetch-attr');
@@ -70,6 +70,7 @@ Route::get('/view-product/{product}/{id}', [ProductController::class, 'view_prod
 Route::get('/product-content/{type}/{id}', [ProductController::class, 'view_product']);
 
 Route::get('/variation-content/{id}', [ProductController::class, 'view_variation']);
+Route::get('/',[OnlineStoreController::class, 'online_store']);
 Route::get('/online-store/{ctg?}', [OnlineStoreController::class, 'online_store'])->name('online-store');
 Route::post('/add-to-cart',[OnlineStoreController::class, 'add_to_cart']);
 Route::get('/cart-view', [OnlineStoreController::class, 'cart_view'])->name('cart-view');

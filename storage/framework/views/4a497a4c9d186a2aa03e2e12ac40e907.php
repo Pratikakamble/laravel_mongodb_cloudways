@@ -152,10 +152,12 @@
                 success:function(data){
                     if(data.success){
                         $('#addAttribute').modal('show');
-                        $('#attribute').val(data.attribute.name);
-                        $('#cid').val(eid);
+                        $('#category_id').val(data.ctg);
+                        fetchSubCategory(data.ctg, data.sub_ctg)
+                        $('#attribute').val(data.name);
                         $('#action').val('edit');
-
+                        $('#cid').val(data.id);
+                       
                     }
                 },
             }); 
@@ -195,7 +197,7 @@
         }
     }
 
-    function fetchSubCategory(val){
+    function fetchSubCategory(val, sub_ctg=null){
          $.ajax({
             url:"<?php echo e(route('fetch-sub-ctg')); ?>",
             type:"get",
@@ -203,6 +205,7 @@
             success:function(data){
                 if(data.success){
                     $('#sub_category_id').html(data.html_content);
+                    $('#sub_category_id').val(sub_ctg);
                 }
             },
             });
