@@ -103,6 +103,7 @@
                 	if(data.success){
 	                	reload_datatable();
 	                	$('#category_form')[0].reset();
+                        $('#category_form input').val('');
 	                	alert(data.message);
                 	}
                 },
@@ -120,6 +121,7 @@
             	url:"<?php echo e(route('edt-category')); ?>",
                 type:"get",
                 data: {eid : eid},
+               
                 success:function(data){
                 	if(data.success){
 	                	$('#addCategory').modal('show');
@@ -129,6 +131,7 @@
 
                 	}
                 },
+                
             }); 
    
    }
@@ -140,11 +143,20 @@
             	url:"<?php echo e(route('upd-category')); ?>",
                 type:"post",
                 data: {eid : eid, category: category},
+                  beforeSend: function(){
+                    $('#save').text('Saving ...');
+                    $('#save').attr('disabled',true);
+                },
                 success:function(data){
                 	if(data.success){
 	                	alert(data.message);
+                         $('#category_form input').val('');
 	                	reload_datatable();
                 	}
+                },
+                 complete: function(){
+                    $('#save').text('Save');
+                    $('#save').attr('disabled',false);
                 },
             });
 

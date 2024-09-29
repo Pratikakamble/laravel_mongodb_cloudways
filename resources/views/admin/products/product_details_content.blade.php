@@ -2,21 +2,22 @@
  <div class="row mb-3 append_input">
     @foreach($product_details as $key => $dtl)
         @php
+        $index = $key;
         $key = $key+1;
         @endphp
         <div class="row" id="row-{{$key}}">
                                 <div class="col-sm-1 text-center" style="align-content: center;">
                                     <span class="dtl_attr_cnt">{{$key}}.</span>
-                                    <input type="hidden"  class="hidden_details" name="product_details[{{$key}}][details_id]" value="{{$dtl['_id']}}">
+                                    <input type="hidden"  class="hidden_details" name="product_details[{{$index}}][details_id]" value="{{$dtl['_id']}}">
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Attribute<span class="text-danger">*</span></label>
-                                    <input type="text" name="product_details[{{$key}}][attr]"  class="form-control select_attribute" value="{{$dtl['attribute']}}">
+                                    <input type="text" name="product_details[{{$index}}][attr]"  class="form-control select_attribute" value="{{$dtl['attribute']}}">
                                     <span class="text-danger err"></span>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Value<span class="text-danger">*</span></label>
-                                    <input type="text" name="product_details[{{$key}}][val]" class="form-control input_value" value="{{$dtl['value']}}">
+                                    <input type="text" name="product_details[{{$index}}][val]" class="form-control input_value" value="{{$dtl['value']}}">
                                     <span class="text-danger err"></span>
                                 </div>
                                 <div class="col-sm-1" style="align-content: center;">

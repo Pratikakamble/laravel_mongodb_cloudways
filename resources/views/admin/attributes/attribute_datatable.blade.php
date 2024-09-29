@@ -12,8 +12,8 @@
 					@foreach($attributes as $key => $attr)
 						<tr>
 							<td>{{$key+1}}</td>
-							<td>{{$attr['sub_category']['category']['name']}}</td>
-							<td>{{$attr['sub_category']['name']}}</td>
+							<td>{{$attr['sub_category']['category']['name'] ?? ''}}</td>
+							<td>{{$attr['sub_category']['name'] ?? ''}}</td>
 							<td>
 								{{$attr['name']}}
 							</td>

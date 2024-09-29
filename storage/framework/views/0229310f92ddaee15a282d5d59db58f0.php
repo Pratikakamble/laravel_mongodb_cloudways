@@ -18,4 +18,6 @@
     </div>
 
   </div>
-</nav><?php /**PATH D:\Laravel_Mongodb\resources\views/layouts/front_menu_navbar.blade.php ENDPATH**/ ?>
+</nav>
+
+<?php /**PATH D:\Laravel_Mongodb\resources\views/layouts/front_menu_navbar.blade.php ENDPATH**/ ?>

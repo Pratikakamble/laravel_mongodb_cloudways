@@ -8,14 +8,15 @@
 					@endphp
 
 
-
+					@if(!empty($images))
 					@foreach($images as $img)
 						<img src="{{asset($img)}}" class="img-responsive p-3" width="100%" height="90px" style="cursor: pointer;">
 					@endforeach
+					@endif
 				</div>
 
 				<div class="col-md-4 bg-light ">
-					<img src = "{{asset($images[0])}}" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
+					<img src = "{{asset($product['pro_image'] ?? '')}}" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
 				</div>
 				<input type="hidden" id="selling_amount" value="{{$product['selling_price'] ?? ''}}"> 
 
@@ -53,7 +54,7 @@
 			    	<p><b>{{$atr['attr_id']}}</b>: <span>{{$atr['attr_val']}}</span></p>
 
 
-			    	<input type="text" class="form-control atr_val" value="{{$atr['attr_id'].':'.$atr['attr_val']}}"> 
+			    	<input type="hidden" class="form-control atr_val" value="{{$atr['attr_id'].':'.$atr['attr_val']}}"> 
 			    </div>
 			@endforeach
 		@endif
@@ -82,7 +83,15 @@
 
 </div>
 
-
+<div class="row">
+	@foreach($data as $key => $val)
+		@if(count($val) == 1)
+			@foreach($val as $k => $atr)
+			   <p><b>{{$atr['attribute']['name'] ?? ''}}</b>: <span>{{$atr['attr_val'] ?? ''}}</span></p>
+			@endforeach
+		@endif
+	@endforeach
+</div>
 						@if(!empty($product['variation_detail']))
 							<div class="row pro_dtl">
 								<h6 class="mb-2 mt-5"><strong>Product Details</strong></h6>
@@ -99,8 +108,10 @@
 							</div>
 						@endif
 
-						<button class="btn btn-primary btn-sm mt-2" onclick="addToCart()">Add To Cart</button>
-						<a href="{{url('stripe/'.$product['selling_price'])}}"><button class="btn btn-success mt-2">Buy Now</button></a>
+<div style="display: flex">
+						<button class="btn btn-primary btn-sm mt-2" onclick="addToCart()"  style="width:20%; ">Add To Cart</button>
+						<a href="{{url('stripe/'.$product['selling_price'])}}"><button class="pl-2 btn btn-success mt-2">Buy Now</button></a>
+					</div>
 					</div>
 				</div>
 				

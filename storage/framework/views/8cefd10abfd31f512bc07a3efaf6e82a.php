@@ -50,7 +50,7 @@
 										<?php $__currentLoopData = $val; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $atr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										    <div id="<?php echo e('identy'); ?><?php echo e($k+1); ?>" class="container tab-pane <?php if($k == 0): ?> active <?php endif; ?>" style="padding:0px;">
 										    	<p><b><?php echo e($atr['attribute']['name']); ?></b>: <span><?php echo e($atr['value']); ?></span></p>
-										    	<input type="text" class="form-control atr_val" value="<?php echo e($atr['attribute_id'].':'.$atr['value']); ?>"> 
+										    	<input type="hidden" class="form-control atr_val" value="<?php echo e($atr['attribute_id'].':'.$atr['value']); ?>"> 
 										    	
 										    </div>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -77,6 +77,23 @@
 									<?php endif; ?>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</ul>
+
+
+
+
+							<div class="row">
+								<?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php if(count($val) == 1): ?>
+										<?php $__currentLoopData = $val; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $atr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										   
+										    	<p><b><?php echo e($atr['attribute']['name']); ?></b>: <span><?php echo e($atr['value']); ?></span></p>
+										    	
+										    	
+										   
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</div>
 						</div>
 
 						<?php if(!empty($product['product_details'])): ?>

@@ -11,6 +11,10 @@ class Category extends Model
     protected $connection = 'mongodb';
     protected $collection = 'categories';
 
+    public function Products(){
+    	return $this->hasMany(Product::class);
+    }
+
     public function SubCategory(){
     	return $this->hasMany(SubCategory::class);
     }

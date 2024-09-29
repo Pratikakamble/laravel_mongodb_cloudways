@@ -44,8 +44,9 @@ class SubCategoryController extends Controller
     }
 
     public function edt_sub_ctg(Request $request){
-        $sub_ctg = SubCategory::select(['category', 'name'])->where(['_id' => $request->eid])->value('name');
-        return ['success' => true, 'sub_ctg' => $sub_ctg];
+        $sub_ctg = SubCategory::select(['category_id', 'name'])->where(['_id' => $request->eid])->first()->toArray();
+
+        return ['success' => true, 'ctg' => $sub_ctg['category_id'], 'sub_ctg' => $sub_ctg['name']];
     }
 
     public function upd_sub_ctg(Request $request){

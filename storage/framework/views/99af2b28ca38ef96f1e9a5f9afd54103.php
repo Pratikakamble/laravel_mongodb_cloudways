@@ -4,16 +4,17 @@
     <?php $__currentLoopData = $value_attribute; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <?php if(!array_key_exists('has_multivalue', $val)): ?>
         <?php
+        $index = $key;
         $key = $key+1;
         ?>
         <div class="row" id="row-<?php echo e($key); ?>">
                                     <div class="col-sm-1 text-center" style="align-content: center;">
                                         <span class="cnt"><?php echo e($key); ?>.</span>
-                                        <input type="hidden"  class="hidden_attribute" name="value_attribute[<?php echo e($key); ?>][attribute_id]" value="<?php echo e($val['_id']); ?>">
+                                        <input type="hidden"  class="hidden_attribute" name="value_attribute[<?php echo e($index); ?>][attribute_id]" value="<?php echo e($val['_id']); ?>">
                                     </div>
                                     <div class="col-sm-2">
                                         <label>Attribute<span class="text-danger">*</span></label>
-                                        <select name="value_attribute[<?php echo e($key); ?>][attr]" class="form-control select_attr" >
+                                        <select name="value_attribute[<?php echo e($index); ?>][attr]" class="form-control select_attr" >
                                             <option value="">Select Attribute</option>
                                             <?php $__currentLoopData = $attributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($attr['_id']); ?>"
@@ -28,7 +29,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>Value<span class="text-danger">*</span></label>
-                                        <input type="text" name="value_attribute[<?php echo e($key); ?>][val]" class="form-control input_val" value="<?php echo e($val['value']); ?>" >
+                                        <input type="text" name="value_attribute[<?php echo e($index); ?>][val]" class="form-control input_val" value="<?php echo e($val['value']); ?>" >
                                         <span class="err text-danger"></span>
                                     </div>
                                    
@@ -42,7 +43,7 @@
                                 
                                     <div class="col-sm-2">
                                         <label>Image</label>
-                                        <input type="file" name="value_attribute[<?php echo e($key); ?>][image]" class="form-control input_image" id="input_image-<?php echo e($key); ?>" onchange="loadFile(event, this, 'pro_atr')">
+                                        <input type="file" name="value_attribute[<?php echo e($index); ?>][image]" class="form-control input_image" id="input_image-<?php echo e($key); ?>" onchange="loadFile(event, this, 'pro_atr')">
                                     </div>
                                     <div class="col-sm-2" style="align-content: center;">
                                         <?php if($key == 1): ?>

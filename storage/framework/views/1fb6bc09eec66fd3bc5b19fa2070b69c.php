@@ -119,6 +119,8 @@
                 	if(data.success){
 	                	reload_datatable();
 	                	$('#sub_category_form')[0].reset();
+                        $('#sub_category_form select').val('');
+                        $('#sub_category_form input').val('');
 	                	alert(data.message);
                 	}
                 },
@@ -131,20 +133,22 @@
     	}
     });
    
-   function edtCtg(eid){
+   function edtSubCtg(eid){
    	 $.ajax({
             	url:"<?php echo e(route('edt-sub-category')); ?>",
                 type:"get",
                 data: {eid : eid},
+               
                 success:function(data){
                 	if(data.success){
 	                	$('#addSubCategory').modal('show');
-	                	$('#sub_category').val(data.sub_ctg.name);
+                        $('#sub_category').val(data.sub_ctg);
+	                	$('#category').val(data.ctg);
 	                	$('#cid').val(eid);
 	                	$('#action').val('edit');
-
                 	}
                 },
+                
             }); 
    
    }
@@ -156,11 +160,21 @@
             	url:"<?php echo e(route('upd-sub-category')); ?>",
                 type:"post",
                 data: {eid : eid, sub_category: sub_category},
+                beforeSend: function(){
+                    $('#save').text('Saving ...');
+                    $('#save').attr('disabled',true);
+                },
                 success:function(data){
                 	if(data.success){
 	                	alert(data.message);
+                        $('#sub_category_form select').val('');
+                        $('#sub_category_form input').val('');
 	                	reload_datatable();
                 	}
+                },
+                complete: function(){
+                    $('#save').text('Save');
+                    $('#save').attr('disabled',false);
                 },
             });
 

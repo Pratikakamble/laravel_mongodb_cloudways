@@ -55,6 +55,7 @@
 						<tr>
 							<td align="center" colspan="5">Total</td>
 							<td id="total_amount">{{$total}}</td>
+							<td><a href="{{url('stripe/'.$total)}}" class="btn btn-success">Proceed to Buy</a></td>
 						</tr>
 					</tbody>
 							

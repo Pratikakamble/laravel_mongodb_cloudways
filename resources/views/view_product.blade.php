@@ -20,8 +20,8 @@
 </style>
 	<div class="container-fluid">
 
-		<input type="text" id="pro_id" value="{{$product['_id']}}">
-		<input type="text" id="vrtn_id" value="">
+		<input type="hidden" id="pro_id" value="{{$product['_id']}}">
+		<input type="hidden" id="vrtn_id" value="">
 
 
 

@@ -174,7 +174,8 @@ class ProductController extends Controller
         if($type == 'product'){
             $product = Product::with(['ProductDetails','ProductImages','ValueAttribute','ValueAttribute.Attribute:_id,name','Variation','Variation.VariationAttribute', 'Variation.VariationDetail'])->where('_id',$id)->first();
         }else if($type == 'variation'){
-            $product = Variation::with(['VariationAttribute', 'VariationDetail'])->where(['_id' => $id])->first();
+            $product = Variation::with(['VariationAttribute', 'VariationAttribute.Attribute:_id,name', 'VariationDetail'])->where(['_id' => $id])->first();
+
         }
 
        if(!empty($product)){
@@ -215,6 +216,7 @@ class ProductController extends Controller
     }
 
     public function update_product(Request $request){
+        //echo "<pre>"; print_r($request->all()); die;
     	try{
     		DB::beginTransaction();
     		$product = Product::find($request->product_id);

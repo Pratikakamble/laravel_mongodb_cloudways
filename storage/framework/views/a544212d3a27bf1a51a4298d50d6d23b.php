@@ -17,17 +17,26 @@
     .btn-block{
         margin-top:20px;
     }
+
+    body{
+        align-content: center;
+    }
+
+    .close{
+        display:none;
+    }
 </style>
     
 <div class="container">
     
-    <h1>Make Payment with Stripe</h1>
+    
     
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 mx-auto mt-5 p-3" style="border:1px solid #ccc; " >
+            <h3 class="text-center my-3">Make Payment with Stripe</h3>
             <div class="panel panel-default credit-card-box">
                 <div class="panel-heading display-table" >
-                        <h3 class="panel-title" >Payment Details</h3>
+                        <h5 class="panel-title mt-2" >Payment Details</h5>
                 </div>
                 <div class="panel-body">
     
@@ -174,6 +183,8 @@ $(function() {
     }
      
 });
+
+
 </script>
 <?php $__env->stopSection(); ?>
 

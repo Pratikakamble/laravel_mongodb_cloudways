@@ -8,14 +8,15 @@
 					?>
 
 
-
+					<?php if(!empty($images)): ?>
 					<?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<img src="<?php echo e(asset($img)); ?>" class="img-responsive p-3" width="100%" height="90px" style="cursor: pointer;">
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					<?php endif; ?>
 				</div>
 
 				<div class="col-md-4 bg-light ">
-					<img src = "<?php echo e(asset($images[0])); ?>" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
+					<img src = "<?php echo e(asset($product['pro_image'] ?? '')); ?>" class="img-fluid mt-3" id="image" style="width:475px; cursor: pointer;">
 				</div>
 				<input type="hidden" id="selling_amount" value="<?php echo e($product['selling_price'] ?? ''); ?>"> 
 
@@ -53,7 +54,7 @@
 			    	<p><b><?php echo e($atr['attr_id']); ?></b>: <span><?php echo e($atr['attr_val']); ?></span></p>
 
 
-			    	<input type="text" class="form-control atr_val" value="<?php echo e($atr['attr_id'].':'.$atr['attr_val']); ?>"> 
+			    	<input type="hidden" class="form-control atr_val" value="<?php echo e($atr['attr_id'].':'.$atr['attr_val']); ?>"> 
 			    </div>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		<?php endif; ?>
@@ -82,7 +83,15 @@
 
 </div>
 
-
+<div class="row">
+	<?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		<?php if(count($val) == 1): ?>
+			<?php $__currentLoopData = $val; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $atr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			   <p><b><?php echo e($atr['attribute']['name'] ?? ''); ?></b>: <span><?php echo e($atr['attr_val'] ?? ''); ?></span></p>
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+		<?php endif; ?>
+	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</div>
 						<?php if(!empty($product['variation_detail'])): ?>
 							<div class="row pro_dtl">
 								<h6 class="mb-2 mt-5"><strong>Product Details</strong></h6>
@@ -99,8 +108,10 @@
 							</div>
 						<?php endif; ?>
 
-						<button class="btn btn-primary btn-sm mt-2" onclick="addToCart()">Add To Cart</button>
-						<a href="<?php echo e(url('stripe/'.$product['selling_price'])); ?>"><button class="btn btn-success mt-2">Buy Now</button></a>
+<div style="display: flex">
+						<button class="btn btn-primary btn-sm mt-2" onclick="addToCart()"  style="width:20%; ">Add To Cart</button>
+						<a href="<?php echo e(url('stripe/'.$product['selling_price'])); ?>"><button class="pl-2 btn btn-success mt-2">Buy Now</button></a>
+					</div>
 					</div>
 				</div>
 				
@@ -109,7 +120,7 @@
 				<div class="col-md-2 cart_div">
 					
 					<div class="shadow p-3 mb-5 bg-white rounded cart_count">
-						<p style="margin:0px; padding:0px;"><button type="button" class="btn btn-outline-success" style="padding:5px 4px; font-size:11px; font-weight: bold;" onclick="viewCartProducts()">View Cart</button></p>
+						<p style="margin:0px; padding:0px;  text-align: center;"><button type="button" class="btn btn-outline-success" style="padding:5px 4px; font-size:11px; font-weight: bold;" onclick="viewCartProducts()">View Cart</button></p>
 						<div id="cart_content" ></div>
 					</div>
 					

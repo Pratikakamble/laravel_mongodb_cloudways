@@ -41,7 +41,7 @@ Route::middleware(['check_auth'])->group(function(){
 	Route::post('subctg-exists',[SubCategoryController::class, 'sub_ctg_exists'])->name('subctg-exists');
 	Route::post('save-sub-category', [SubCategoryController::class, 'save_sub_ctg'])->name('save-sub-category');
 	Route::get('edt-sub-category', [SubCategoryController::class, 'edt_sub_ctg'])->name('edt-sub-category');
-	Route::get('upd-sub-category', [SubCategoryController::class, 'upd_sub_ctg'])->name('upd-sub-category');
+	Route::post('upd-sub-category', [SubCategoryController::class, 'upd_sub_ctg'])->name('upd-sub-category');
 	Route::post('dlt-sub-category', [SubCategoryController::class, 'dlt_sub_ctg'])->name('dlt-sub-category');
 	Route::get('view-products', [ProductController::class, 'view_products'])->name('view-products');
 	Route::get('add-product', [ProductController::class, 'add_product'])->name('add-product');
@@ -63,18 +63,15 @@ Route::middleware(['check_auth'])->group(function(){
 });
 
 
+Route::get('/', [OnlineStoreController::class, 'online_store']);
 
 Route::middleware(['user_auth'])->group(function(){
-
 Route::get('/view-product/{product}/{id}', [ProductController::class, 'view_product']);
 Route::get('/product-content/{type}/{id}', [ProductController::class, 'view_product']);
-
 Route::get('/variation-content/{id}', [ProductController::class, 'view_variation']);
-Route::get('/',[OnlineStoreController::class, 'online_store']);
 Route::get('/online-store/{ctg?}', [OnlineStoreController::class, 'online_store'])->name('online-store');
 Route::post('/add-to-cart',[OnlineStoreController::class, 'add_to_cart']);
 Route::get('/cart-view', [OnlineStoreController::class, 'cart_view'])->name('cart-view');
-	
 });
 
 Route::get('/login', [OnlineStoreController::class, 'login'])->name('login');
@@ -87,7 +84,7 @@ Route::get('/view-cart-content', [OnlineStoreController::class, 'view_cart_conte
 
 
 Route::post('/update-qnt', [OnlineStoreController::class, 'update_qnt']);
-
+Route::get('/search-products/{keyword}', [OnlineStoreController::class, 'search_products']);
 
 Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe/{amount}', 'stripe');

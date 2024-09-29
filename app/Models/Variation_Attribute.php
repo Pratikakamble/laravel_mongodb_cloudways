@@ -15,5 +15,8 @@ class Variation_Attribute extends Model
     public function Variation(){
     	return $this->belongsTo(Variation::class);
     }
+     public function Attribute(){
+    	return $this->belongsTo(Attribute::class, 'attr_id', '_id');
+    }
 
 }

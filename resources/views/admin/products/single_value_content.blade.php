@@ -4,16 +4,17 @@
     @foreach($value_attribute as $key => $val)
     @if(!array_key_exists('has_multivalue', $val))
         @php
+        $index = $key;
         $key = $key+1;
         @endphp
         <div class="row" id="row-{{$key}}">
                                     <div class="col-sm-1 text-center" style="align-content: center;">
                                         <span class="cnt">{{$key}}.</span>
-                                        <input type="hidden"  class="hidden_attribute" name="value_attribute[{{$key}}][attribute_id]" value="{{$val['_id']}}">
+                                        <input type="hidden"  class="hidden_attribute" name="value_attribute[{{$index}}][attribute_id]" value="{{$val['_id']}}">
                                     </div>
                                     <div class="col-sm-2">
                                         <label>Attribute<span class="text-danger">*</span></label>
-                                        <select name="value_attribute[{{$key}}][attr]" class="form-control select_attr" >
+                                        <select name="value_attribute[{{$index}}][attr]" class="form-control select_attr" >
                                             <option value="">Select Attribute</option>
                                             @foreach($attributes as $attr)
                                             <option value="{{$attr['_id']}}"
@@ -28,7 +29,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>Value<span class="text-danger">*</span></label>
-                                        <input type="text" name="value_attribute[{{$key}}][val]" class="form-control input_val" value="{{$val['value']}}" >
+                                        <input type="text" name="value_attribute[{{$index}}][val]" class="form-control input_val" value="{{$val['value']}}" >
                                         <span class="err text-danger"></span>
                                     </div>
                                    
@@ -42,7 +43,7 @@
                                 
                                     <div class="col-sm-2">
                                         <label>Image</label>
-                                        <input type="file" name="value_attribute[{{$key}}][image]" class="form-control input_image" id="input_image-{{$key}}" onchange="loadFile(event, this, 'pro_atr')">
+                                        <input type="file" name="value_attribute[{{$index}}][image]" class="form-control input_image" id="input_image-{{$key}}" onchange="loadFile(event, this, 'pro_atr')">
                                     </div>
                                     <div class="col-sm-2" style="align-content: center;">
                                         @if($key == 1)

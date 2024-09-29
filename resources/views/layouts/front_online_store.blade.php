@@ -22,12 +22,13 @@
 			padding:0px;
 			margin:0px;
 		}
+		
 	</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background:navy;">
 	  <div class="container-fluid px-5">
-	    <a class="navbar-brand text-white" href="#"><b> <i class="fa fa-globe" ></i> Online Store</b></a>
+	    <a class="navbar-brand text-white" href="{{route('online-store')}}"><b> <i class="fa fa-globe" ></i> Online Store</b></a>
 
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
@@ -35,8 +36,8 @@
 
 	    <div class="collapse navbar-collapse d-lg-flex justify-content-center clearfix" id="navbarNav">
 		    <form class="d-flex">
-		        <input class="form-control me-2" style="width:800px;" type="search" placeholder="Search" aria-label="Search">
-		        <button class="btn btn-outline-success text-white" type="submit" style="border:1px solid lime;">Search</button>
+		        <input id="keyword" class="form-control me-2" style="width:800px;" type="search" placeholder="Search" aria-label="Search">
+		        <button type="button" id="search" class="btn btn-outline-success text-white" style="border:1px solid lime;">Search</button>
 	        </form>
 	    </div>
 

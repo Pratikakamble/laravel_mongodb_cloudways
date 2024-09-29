@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\CartAttribute;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Session;
 use View;
 
@@ -17,11 +18,12 @@ class OnlineStoreController extends Controller
 {
     public function online_store($ctg=null){
     	$categories = Category::all();
-      
+        $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
         if($ctg != ''){
             $product_count = Product::where(['category_id' => $ctg])->get()->count(); 
             $product_count = ($product_count >= 12) ? 12 : $product_count;
             $products = Product::where(['category_id' => $ctg])->get()->random($product_count)->toArray();
+            return view('search_products', ['categories' => $categories, 'products' => $products, 'cart_count' => $cart_count]);
         }else{
             $product_count = Product::all()->count(); 
             $product_count = ($product_count >= 12) ? 12 : $product_count;
@@ -31,9 +33,16 @@ class OnlineStoreController extends Controller
         
 
         $products = array_chunk($products, 4);
+
+
+        $all_products = Category::with('products')->get()->toArray();
+
+
+
+        
         //echo "<pre>"; print_r($products); die;
-        $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
-    	return view('online_store', ['categories' => $categories, 'products' => $products, 'cart_count' => $cart_count]);
+        
+    	return view('online_store', ['categories' => $categories, 'products' => $products, 'cart_count' => $cart_count, 'all_products' => $all_products]);
     }
 
     public function register_view(){
@@ -162,5 +171,28 @@ class OnlineStoreController extends Controller
         $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
         Cart::where(['_id' => $cart_id])->delete();
         return ['success' => true, 'cart_count' => $cart_count];
+    }
+
+    public function search_products($keyword){
+       $categories = Category::all();
+       $products = Product::where('brand_or_store', 'LIKE', '%'.$keyword.'%')->orWhere('product_name', 'LIKE', '%'.$keyword.'%')->get()->toArray();
+
+
+      /* $products = Product::leftJoin('categories', 'categories._id', '=', 'products.category_id' )
+        ->leftJoin('sub_categories', 'sub_categories.id', '=', 'products.sub_category_id' )
+        ->leftJoin('product_details', 'product_details.product_id', '=', 'products._id' )
+        ->leftJoin('variations', 'variations.product_id', '=', 'products._id' )
+        ->where('categories.name', 'LIKE', '%'.$keyword.'%' )
+        ->orWhere('sub_categories.name', 'LIKE', '%'.$keyword.'%')
+        ->orWhere('products.product_name', 'LIKE', '%'.$keyword.'%')
+        ->orWhere('products.brand_or_store', 'LIKE', '%'.$keyword.'%')
+        ->orWhere('product_details.value', 'LIKE', '%'.$keyword.'%')
+        ->orWhere('variations.variation_name', 'LIKE', '%'.$keyword.'%')
+        ->get()->toArray();*/
+
+        $cart_count  =  Cart::where(['user_id' => Session::get('user_id')])->count();
+
+         return view('search_products', ['products' => $products, 'categories' => $categories, 'cart_count' => $cart_count]);
+
     }
 }

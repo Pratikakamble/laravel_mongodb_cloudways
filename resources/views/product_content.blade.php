@@ -50,7 +50,7 @@
 										@foreach($val as $k => $atr)
 										    <div id="{{'identy'}}{{$k+1}}" class="container tab-pane @if($k == 0) active @endif" style="padding:0px;">
 										    	<p><b>{{$atr['attribute']['name']}}</b>: <span>{{$atr['value']}}</span></p>
-										    	<input type="text" class="form-control atr_val" value="{{$atr['attribute_id'].':'.$atr['value']}}"> 
+										    	<input type="hidden" class="form-control atr_val" value="{{$atr['attribute_id'].':'.$atr['value']}}"> 
 										    	
 										    </div>
 										@endforeach
@@ -77,6 +77,23 @@
 									@endif
 								@endforeach
 							</ul>
+
+
+
+
+							<div class="row">
+								@foreach($data as $key => $val)
+									@if(count($val) == 1)
+										@foreach($val as $k => $atr)
+										   
+										    	<p><b>{{$atr['attribute']['name']}}</b>: <span>{{$atr['value']}}</span></p>
+										    	
+										    	
+										   
+										@endforeach
+									@endif
+								@endforeach
+							</div>
 						</div>
 
 						@if(!empty($product['product_details']))

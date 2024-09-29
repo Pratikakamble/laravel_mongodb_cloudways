@@ -132,6 +132,8 @@
                     if(data.success){
                         reload_datatable();
                         $('#attribute_form')[0].reset();
+                        $('#attribute_form select').val('');
+                        $('#attribute_form input').val('');
                         alert(data.message);
                     }
                 },
@@ -171,11 +173,19 @@
                 url:"<?php echo e(route('upd-attribute')); ?>",
                 type:"post",
                 data: {eid : eid, attribute: attribute},
+                beforeSend: function(){
+                    $('#save').text('Saving ...');
+                    $('#save').attr('disabled',true);
+                },
                 success:function(data){
                     if(data.success){
                         alert(data.message);
                         reload_datatable();
                     }
+                },
+                complete: function(){
+                    $('#save').text('Save');
+                    $('#save').attr('disabled',false);
                 },
         });
    }

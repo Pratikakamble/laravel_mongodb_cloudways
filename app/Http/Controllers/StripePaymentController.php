@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Session;
 use Stripe;
 use App\Models\Category;
+use App\Models\Cart;
 class StripePaymentController extends Controller
 {
     /**

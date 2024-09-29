@@ -2,21 +2,22 @@
  <div class="row mb-3 append_input">
     <?php $__currentLoopData = $product_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $dtl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <?php
+        $index = $key;
         $key = $key+1;
         ?>
         <div class="row" id="row-<?php echo e($key); ?>">
                                 <div class="col-sm-1 text-center" style="align-content: center;">
                                     <span class="dtl_attr_cnt"><?php echo e($key); ?>.</span>
-                                    <input type="hidden"  class="hidden_details" name="product_details[<?php echo e($key); ?>][details_id]" value="<?php echo e($dtl['_id']); ?>">
+                                    <input type="hidden"  class="hidden_details" name="product_details[<?php echo e($index); ?>][details_id]" value="<?php echo e($dtl['_id']); ?>">
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Attribute<span class="text-danger">*</span></label>
-                                    <input type="text" name="product_details[<?php echo e($key); ?>][attr]"  class="form-control select_attribute" value="<?php echo e($dtl['attribute']); ?>">
+                                    <input type="text" name="product_details[<?php echo e($index); ?>][attr]"  class="form-control select_attribute" value="<?php echo e($dtl['attribute']); ?>">
                                     <span class="text-danger err"></span>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Value<span class="text-danger">*</span></label>
-                                    <input type="text" name="product_details[<?php echo e($key); ?>][val]" class="form-control input_value" value="<?php echo e($dtl['value']); ?>">
+                                    <input type="text" name="product_details[<?php echo e($index); ?>][val]" class="form-control input_value" value="<?php echo e($dtl['value']); ?>">
                                     <span class="text-danger err"></span>
                                 </div>
                                 <div class="col-sm-1" style="align-content: center;">
